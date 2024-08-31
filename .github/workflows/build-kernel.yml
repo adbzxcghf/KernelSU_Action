@@ -244,20 +244,6 @@ jobs:
         wget https://github.com/wu17481748/lxc-docker/releases/download/lxc-docker-2config/LXC-DOCKER-OPEN-CONFIG.sh
         chmod 777 LXC-DOCKER-OPEN-CONFIG.sh
         ./LXC-DOCKER-OPEN-CONFIG.sh android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }} -w
-        
-    - name: lxc
-      run: |
-       cd $GITHUB_WORKSPACE/kernel_workspace
-       if [ -f android-kernel/net/netfilter/xt_qtaguid.c ]; then
-         wget https://github.com/wu17481748/android-lxc-docker/blob/main/xt_qtaguid.patch
-         patch -p0 < xt_qtaguid.patch
-       fi
-       
-       if [ -f android-kernel/kernel/cgroup/cgroup.c ]; then
-         wget https://github.com/wu17481748/android-lxc-docker/blob/main/cgroup.patch
-         patch -p0 < cgroup.patch
-       fi
-       
        
     - name: 关闭ANDROID_PARANOID_NETWORK
       run: |
