@@ -248,20 +248,11 @@ jobs:
     - name: lxc
       run: |
        cd $GITHUB_WORKSPACE/kernel_workspace
-       wget https://github.com/fate-think/LXC-DOCKER-KernelSU_Action/releases/download/1.0.0/runcpatch.sh
-       chmod a+x runcpatch.sh
-       if [ -f android-kernel/kernel/cgroup.c ]; then
-       ./runcpatch.sh android-kernel/kernel/cgroup.c               
-       fi
+         wget https://github.com/wu17481748/android-lxc-docker/blob/main/xt_qtaguid.patch
+         patch -p0 < xt_qtaguid.patch
+         wget https://github.com/wu17481748/android-lxc-docker/blob/main/cgroup.patch
+         patch -p0 < cgroup.patch
        
-       if [ -f android-kernel/kernel/cgroup/cgroup.c ]; then
-       ./runcpatch.sh android-kernel/kernel/cgroup/cgroup.c               
-       fi
-       
-       if [ -f android-kernel/net/netfilter/xt_qtaguid.c ]; then
-         wget https://github.com/wu17481748/lxc-docker/releases/download/lxc/lxc.patch
-         patch -p0 < lxc.patch
-       fi   
        
     - name: 关闭ANDROID_PARANOID_NETWORK
       run: |
